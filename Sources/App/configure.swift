@@ -10,6 +10,14 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     let router = EngineRouter.default()
     try routes(router)
     services.register(router, as: Router.self)
+    
+    // Creating own Server Port
+    let myServices = NIOServerConfig.default(port:8081)
+    services.register(myServices)
+    
+    // Another Example
+    
+    
 
     /// Register middleware
     var middlewares = MiddlewareConfig() // Create _empty_ middleware config
@@ -28,6 +36,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     /// Configure migrations
     var migrations = MigrationConfig()
     migrations.add(model: Todo.self, database: .sqlite)
+    migrations.add(model: User.self, database: .sqlite)
     services.register(migrations)
 
 }
